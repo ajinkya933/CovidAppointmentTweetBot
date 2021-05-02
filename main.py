@@ -10,6 +10,8 @@ import tweepy
 from beepy import beep
 from requests import ReadTimeout, Timeout
 
+from multiprocessing import Pool
+
 # Global variables therefore loading them here
 
 # Cities
@@ -136,18 +138,22 @@ def city(city_to_tweet):
                         sleep_time(2)
                         api.update_status(tweet)
                         already_checked_hash_list.add(hash_val)
-            time.sleep(0.1)
+            sleep_time(1)
 
     print("Writing file " + city_to_tweet + ".data")
     with open(city_to_tweet + '.data', 'wb') as availability_checked_file:
         pickle.dump(already_checked_hash_list, availability_checked_file)
 
 
-def main():
+def city_loop(city_name):
     while True:
-        for c in cities.keys():
-            city(c)
-            sleep_time(5)
+        city(city_name)
+
+
+def main():
+    c = cities.keys()
+    with Pool(len(c)) as p:
+        p.map(city_loop, c)
 
 
 if __name__ == '__main__':
