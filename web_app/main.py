@@ -106,7 +106,7 @@ def city(city_to_tweet):
                         my_list.append(tweet)
                         sleep_time(2)
                         # api.update_status(tweet)
-                        already_checked_hash_list.add(hash_val)
+                        already_checked_hash_list.append(hash_val)
             sleep_time(1)
             # st.write(tweet)
 
