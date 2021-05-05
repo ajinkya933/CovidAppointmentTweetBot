@@ -50,7 +50,7 @@ def sleep_time(duration_int):
         time.sleep(1)
 
 def city(city_to_tweet):
-    my_list=[]
+    
     session = requests.Session()
     init_url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict"
     date = datetime.date.today()
@@ -103,19 +103,19 @@ def city(city_to_tweet):
                                 c['name'] + "(" + str(c['pincode']) + ")" + " on " + str(date_to_fetch.day) + "/" + str(
                             date_to_fetch.month)
                         print("Tweeting " + tweet)
-                        my_list.append(tweet)
-                        sleep_time(2)
+                        with open('Pune_list.csv','a') as fd:
+                           fd.write(tweet)
+
+                        
+                        sleep_time(10)
                         # api.update_status(tweet)
-                        already_checked_hash_list.append(hash_val)
-            sleep_time(1)
+                        already_checked_hash_list.add(hash_val)
+            sleep_time(5)
             # st.write(tweet)
 
     print("Writing file " + city_to_tweet + ".data")
     with open(city_to_tweet + '.data', 'wb') as availability_checked_file:
-        pickle.dump(my_list, availability_checked_file)
-    
-    for item in my_list:
-        print(item)
+        pickle.dump(already_checked_hash_list, availability_checked_file)
 
 def city_loop(city_name):
     while True:
