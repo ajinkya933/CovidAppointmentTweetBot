@@ -97,20 +97,20 @@ def city(city_to_tweet):
                         date_to_fetch.day) + "/" + str(date_to_fetch.month)
                     hash_val = hashlib.md5(hash_str.encode('utf-8')).hexdigest()
                     if hash_val not in already_checked_hash_list:
-                        tweet = c[
-                            'state_name'].replace(" ", "") + ", #" + c['district_name'].replace(
+                        tweet = "#" + c['district_name'].replace(
                             " ", "") + " at " + \
                                 c['name'] + "(" + str(c['pincode']) + ")" + " on " + str(date_to_fetch.day) + "/" + str(
-                            date_to_fetch.month)
+                            date_to_fetch.month)+','
                         print("Tweeting " + tweet)
-                        with open('Pune_list.csv','a') as fd:
+                        print('district_name', c['district_name'])
+                        with open(c['district_name']+'.csv','a') as fd:
                            fd.write(tweet)
 
                         
-                        sleep_time(10)
+                        sleep_time(6)
                         # api.update_status(tweet)
                         already_checked_hash_list.add(hash_val)
-            sleep_time(5)
+            sleep_time(1)
             # st.write(tweet)
 
     print("Writing file " + city_to_tweet + ".data")

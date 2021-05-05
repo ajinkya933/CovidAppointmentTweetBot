@@ -1,27 +1,17 @@
 import streamlit as st
 import pickle
 import pandas as pd 
+import csv
+
 if st.button('Pune'):
-
-    filename='Pune.data'
-    infile = open(filename,'rb')
-    new_dict = pickle.load(infile)
-    infile.close()
-
-    # print(new_dict)
-
-    st.write('Pune availability: %s' % new_dict)
+    filename='Pune.csv'
+    df = pd.read_csv(filename, header=None)
+    df_t = df.T
+    st.write(df_t)
 
 
 if st.button('Chennai'):
-
-    filename='Chennai.data'
-    infile = open(filename,'rb')
-    new_dict = pickle.load(infile)
-    infile.close()
-
-    # print(new_dict)
-    df = pd.DataFrame(list(new_dict),columns = ['Products'])
-
-
-    st.write(df)
+    filename='Chennai.csv'
+    df = pd.read_csv(filename, header=None)
+    df_t = df.T
+    st.write(df_t)
